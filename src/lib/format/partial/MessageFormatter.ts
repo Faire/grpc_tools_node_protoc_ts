@@ -131,10 +131,8 @@ export namespace MessageFormatter {
                 }
                 existing.push(field);
             }
-
-
             fieldData.snakeCaseName = Utility.toSnakeCase(field.getName());
-            fieldData.camelUpperName = Utility.uppercaseFirst(Utility.snakeToCamel(fieldData.snakeCaseName););
+            fieldData.camelUpperName = Utility.uppercaseFirst(Utility.snakeToCamel(fieldData.snakeCaseName));
             // handle reserved keywords in field names like Javascript generator
             // see: https://github.com/google/protobuf/blob/ed4321d1cb33199984118d801956822842771e7e/src/google/protobuf/compiler/js/js_generator.cc#L508-L510
             if (Utility.isReserved(fieldData.snakeCaseName)) {
