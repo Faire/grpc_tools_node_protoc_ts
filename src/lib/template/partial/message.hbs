@@ -35,7 +35,7 @@
 {{{../indent}}}    set{{{formatName this.camelUpperName}}}(value: Uint8Array | string): {{{../message.messageName}}};
             {{~else~}}
 {{{../indent}}}    get{{{formatName this.camelUpperName}}}(): {{{this.exportType}}}{{#if this.canBeUndefined}} | undefined{{/if}};
-{{{../indent}}}    set{{{formatName this.camelUpperName}}}(value{{#is this.type ../MESSAGE_TYPE}}?{{/is}}: {{{this.exportType}}}): {{{../message.messageName}}};
+{{{../indent}}}    set{{{formatName this.camelUpperName}}}(value: {{{this.exportType}}}{{#is this.type ../MESSAGE_TYPE}} | undefined{{/is}}): {{{../message.messageName}}};
             {{~/is~}}
         {{~/if~}}{{!-- repeat end --}}
     {{~/if~}}{{!-- map spec end --}}
@@ -72,7 +72,7 @@
             {{~#is this.type ../BYTES_TYPE~}}
 {{{../indent}}}        {{{this.snakeCaseName}}}: Uint8Array | string,
             {{~else~}}
-{{{../indent}}}        {{{this.snakeCaseName}}}{{~#if this.canBeUndefined~}}?{{~/if~}}: {{{this.fieldObjectType}}},
+{{{../indent}}}        {{{this.snakeCaseName}}}: {{{this.fieldObjectType}}}{{~#if this.canBeUndefined}} | undefined{{~/if~}},
             {{~/is~}}
         {{~/if~}}{{!-- repeat end --}}
     {{~/if~}}{{!-- map spec end --}}
