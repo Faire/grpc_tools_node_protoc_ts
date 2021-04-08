@@ -160,6 +160,9 @@ var MessageFormatter;
                         canBeUndefined = true;
                     }
                 }
+                if (fieldData.type === FieldTypesFormatter_1.ENUM_TYPE) {
+                    fieldObjectType = `keyof ${fieldObjectType}`
+                }
                 fieldData.fieldObjectType = fieldObjectType;
                 fieldData.canBeUndefined = canBeUndefined;
             }
