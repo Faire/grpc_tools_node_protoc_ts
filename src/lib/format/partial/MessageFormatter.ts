@@ -224,6 +224,9 @@ export namespace MessageFormatter {
                         canBeUndefined = true;
                     }
                 } else {
+                    if (fieldData.type === ENUM_TYPE) {
+                        fieldObjectType = `keyof typeof ${fieldObjectType}`;
+                    }
                     if (Utility.isProto2(fileDescriptor)) {
                         canBeUndefined = true;
                     }
