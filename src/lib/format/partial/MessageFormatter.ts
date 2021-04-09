@@ -225,7 +225,7 @@ export namespace MessageFormatter {
                     }
                 } else {
                     if (fieldData.type === ENUM_TYPE) {
-                        fieldObjectType = `keyof typeof ${fieldObjectType}`;
+                        fieldObjectType = `${fieldObjectType}WebApiCompatible`;
                     }
                     if (Utility.isProto2(fileDescriptor)) {
                         canBeUndefined = true;
@@ -237,7 +237,6 @@ export namespace MessageFormatter {
             fieldData.hasFieldPresence = hasFieldPresence(field, fileDescriptor);
 
             messageData.fields.push(fieldData);
-
         });
 
         descriptor.getNestedTypeList().forEach((nested) => {
@@ -249,6 +248,7 @@ export namespace MessageFormatter {
         });
         descriptor.getEnumTypeList().forEach((enumType) => {
             messageData.formattedEnumListStr.push(EnumFormatter.format(enumType, nextIndent));
+            messageData.formattedEnumListStr.push(EnumFormatter.format(enumType, nextIndent, true));
         });
         descriptor.getOneofDeclList().forEach((oneOfDecl, index) => {
             messageData.formattedOneofListStr.push(OneofFormatter.format(oneOfDecl, oneofGroups[index] || [], nextIndent));

@@ -5,14 +5,14 @@ export namespace EnumFormatter {
     export interface IEnumModel {
         indent: string;
         enumName: string;
-        values: { [key: string]: number };
+        values: { [key: string]: number | string };
     }
 
-    export function format(enumDescriptor: EnumDescriptorProto, indent: string): IEnumModel {
-        const enumName = enumDescriptor.getName();
-        const values: { [key: string]: number } = {};
+    export function format(enumDescriptor: EnumDescriptorProto, indent: string, webApiCompatible?: boolean): IEnumModel {
+        const enumName = `${enumDescriptor.getName()}${webApiCompatible ? "WebApiCompatible" : ""}`;
+        const values: { [key: string]: number | string } = {};
         enumDescriptor.getValueList().forEach((value) => {
-            values[value.getName().toUpperCase()] = value.getNumber();
+            values[value.getName().toUpperCase()] = webApiCompatible ? `"${value.getName().toUpperCase()}"` : value.getNumber();
         });
 
         return {
