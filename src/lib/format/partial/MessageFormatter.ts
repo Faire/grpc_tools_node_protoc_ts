@@ -233,6 +233,10 @@ export namespace MessageFormatter {
                 }
                 fieldData.fieldObjectType = fieldObjectType;
                 fieldData.canBeUndefined = canBeUndefined;
+            } else if (fieldData.isRepeatField) {
+                if (fieldData.type === ENUM_TYPE) {
+                    fieldData.fieldObjectType = `keyof typeof ${fieldData.fieldObjectType}`;
+                }
             }
             fieldData.hasFieldPresence = hasFieldPresence(field, fileDescriptor);
 
