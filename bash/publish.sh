@@ -8,5 +8,5 @@ git add .
 git commit -m "Update."
 
 npm version patch
-npm publish
-git push origin master --verbose
+# npm publish
+# git push origin master --verbose
