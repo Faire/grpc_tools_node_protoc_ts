@@ -12,7 +12,7 @@ export namespace EnumFormatter {
         const enumName = enumDescriptor.getName();
         const values: { [key: string]: number } = {};
         enumDescriptor.getValueList().forEach((value) => {
-            values[value.getName().toUpperCase()] = value.getNumber();
+            values[value.getName()] = value.getNumber();
         });
 
         return {
