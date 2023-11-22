@@ -7,7 +7,7 @@ var EnumFormatter;
         const enumName = enumDescriptor.getName();
         const values = {};
         enumDescriptor.getValueList().forEach((value) => {
-            values[value.getName().toUpperCase()] = value.getNumber();
+            values[value.getName()] = value.getNumber();
         });
         return {
             indent,

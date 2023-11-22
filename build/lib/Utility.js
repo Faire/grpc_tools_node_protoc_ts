@@ -18,6 +18,10 @@ var Utility;
         return str.charAt(0).toUpperCase() + str.slice(1);
     }
     Utility.uppercaseFirst = uppercaseFirst;
+    function toSnakeCase(str) {
+        return str.replace(/([A-Z])/g, "_$1").toLowerCase();
+    }
+    Utility.toSnakeCase = toSnakeCase;
     function isProto2(fileDescriptor) {
         // Empty syntax defaults to proto2
         return (fileDescriptor.getSyntax() === "" || fileDescriptor.getSyntax() === PROTO2_SYNTAX);

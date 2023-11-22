@@ -23,7 +23,6 @@ var MessageFormatter;
     });
     MessageFormatter.defaultMessageFieldType = JSON.stringify({
         snakeCaseName: "",
-        camelCaseName: "",
         camelUpperName: "",
         fieldObjectType: "",
         type: undefined,
@@ -82,13 +81,12 @@ var MessageFormatter;
                 }
                 existing.push(field);
             }
-            fieldData.snakeCaseName = field.getName().toLowerCase();
-            fieldData.camelCaseName = Utility_1.Utility.snakeToCamel(fieldData.snakeCaseName);
-            fieldData.camelUpperName = Utility_1.Utility.uppercaseFirst(fieldData.camelCaseName);
+            fieldData.snakeCaseName = Utility_1.Utility.toSnakeCase(field.getName());
+            fieldData.camelUpperName = Utility_1.Utility.uppercaseFirst(Utility_1.Utility.snakeToCamel(fieldData.snakeCaseName));
             // handle reserved keywords in field names like Javascript generator
             // see: https://github.com/google/protobuf/blob/ed4321d1cb33199984118d801956822842771e7e/src/google/protobuf/compiler/js/js_generator.cc#L508-L510
-            if (Utility_1.Utility.isReserved(fieldData.camelCaseName)) {
-                fieldData.camelCaseName = `pb_${fieldData.camelCaseName}`;
+            if (Utility_1.Utility.isReserved(fieldData.snakeCaseName)) {
+                fieldData.snakeCaseName = `pb_${fieldData.snakeCaseName}`;
             }
             fieldData.type = field.getType();
             fieldData.isMapField = false;
@@ -171,12 +169,20 @@ var MessageFormatter;
                     canBeUndefined = true;
                 }
                 else {
+                    if (fieldData.type === FieldTypesFormatter_1.ENUM_TYPE) {
+                        fieldObjectType = `keyof typeof ${fieldObjectType}`;
+                    }
                     if (Utility_1.Utility.isProto2(fileDescriptor)) {
                         canBeUndefined = true;
                     }
                 }
                 fieldData.fieldObjectType = fieldObjectType;
                 fieldData.canBeUndefined = canBeUndefined;
+            }
+            else if (fieldData.isRepeatField) {
+                if (fieldData.type === FieldTypesFormatter_1.ENUM_TYPE) {
+                    fieldData.exportType = `keyof typeof ${fieldData.exportType}`;
+                }
             }
             fieldData.hasFieldPresence = hasFieldPresence(field, fileDescriptor);
             messageData.fields.push(fieldData);
@@ -206,7 +212,7 @@ var MessageFormatter;
             if (!fieldData.hasClearMethodCreated) {
                 fieldData.hasClearMethodCreated = true;
                 if (fieldData.isRepeatField) {
-                    return `clear${fieldData.camelUpperName}List(): void;`;
+                    return `clear${fieldData.camelUpperName}(): void;`;
                 }
                 else {
                     return `clear${Utility_1.Utility.formatOccupiedName(fieldData.camelUpperName)}(): void;`;
