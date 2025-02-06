@@ -61,7 +61,7 @@
 {{{indent}}}    export type {{{objectTypeName}}} = {
 {{#each message.fields}}{{!-- fields start --}}
     {{~#if this.isMapField~}}{{!-- map spec start --}}
-{{{../indent}}}        {{{this.snakeCaseName}}}: Record<{{{this.mapFieldInfo.keyTypeName}}}{{~#is this.mapFieldInfo.keyType ../MESSAGE_TYPE~}}.AsObject{{~/is~}}, {{{this.mapFieldInfo.valueTypeName}}}{{~#is this.mapFieldInfo.valueType ../MESSAGE_TYPE~}}.AsObject{{~/is~}}>,
+{{{../indent}}}        {{{this.snakeCaseName}}}: Partial<Record<{{{this.mapFieldInfo.keyTypeName}}}{{~#is this.mapFieldInfo.keyType ../MESSAGE_TYPE~}}.AsObject{{~/is~}}, {{{this.mapFieldInfo.valueTypeName}}}{{~#is this.mapFieldInfo.valueType ../MESSAGE_TYPE~}}.AsObject{{~/is~}}>>,
     {{~else~}}{{!-- map spec else --}}
         {{~#if this.isRepeatField~}}{{!-- repeat start --}}
             {{~#is this.type ../BYTES_TYPE~}}
